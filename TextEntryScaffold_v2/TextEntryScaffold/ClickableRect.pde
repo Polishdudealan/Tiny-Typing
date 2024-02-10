@@ -3,6 +3,7 @@ class ClickableRect{
     float xCor, yCor, rectWidth, rectHeight;
     color rectColor;
     String drawText = "";
+    
 
     ClickableRect(float xCor, float yCor, float rectWidth, float rectHeight){
         this.xCor = xCor;
@@ -47,10 +48,12 @@ class ClickableRect{
             && mouseY > yCor && mouseY < yCor+rectHeight);
     }
 
+
     void drawCenterText(){
         //draws text in center of rectangle
         textAlign(CENTER);
-        textSize(int(rectWidth*.2)); //scale to rectangle width
+        //textFont(createFont("NotoSans-Regular.ttf", 100 * displayDensity));
+        //textSize(int(rectWidth*.2)); //scale to rectangle width
         fill(BLACK);
         text(drawText, int(xCor+rectWidth*.5), int(yCor+rectHeight*.5)); //center in rect
     }
