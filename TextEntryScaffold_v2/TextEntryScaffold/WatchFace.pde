@@ -14,6 +14,9 @@ class WatchFace{
     PFont font;
     FaceMode mode;
     String currentTyped = "";
+    
+
+    //char cursor = '▮';
 
     // ArrayList<LetterButton> topLBThreeConfig; // three config
     // ArrayList<LetterButton> topLBFourConfig; //four config
@@ -53,7 +56,7 @@ class WatchFace{
         // bottomLetterButtons = new ArrayList<LetterButton>();
 
         float lbSideLength = sideLength/4;
-        float lbY = y + sideLength/8;
+        float lbY = y +sideLength/4 ;//y + sideLength/8;
         // initize leftButtons
         ArrayList<LetterButton> buttons = new ArrayList<LetterButton>();
         for(int i = 0; i < 3; i++){
@@ -71,7 +74,7 @@ class WatchFace{
             buttons.add(
                 new LetterButton(
                     x+ i*(lbSideLength + lbSideLength/4) + lbSideLength/4,
-                    lbY + lbSideLength + lbSideLength/4,//+i*lbSideLength+lbSideLength/4,
+                    lbY + lbSideLength ,//+ lbSideLength/4,//+i*lbSideLength+lbSideLength/4,
                     lbSideLength,
                     lbSideLength
                 )
@@ -82,7 +85,7 @@ class WatchFace{
             buttons.add(
                 new LetterButton(
                     x+ i*(lbSideLength + lbSideLength/4) + lbSideLength/4,
-                    lbY + 2*lbSideLength + lbSideLength/2,//+i*lbSideLength+lbSideLength/4,
+                    lbY + 2*lbSideLength ,//+ lbSideLength/2,//+i*lbSideLength+lbSideLength/4,
                     lbSideLength,
                     lbSideLength
                 )
@@ -108,7 +111,7 @@ class WatchFace{
             buttons.add(
                 new LetterButton(
                     x+ i*(lbSideLength + lbSideLength/4) + lbSideLength/4,
-                    lbY + lbSideLength + lbSideLength/4,//+i*lbSideLength+lbSideLength/4,
+                    lbY + lbSideLength ,//+ lbSideLength/4,//+i*lbSideLength+lbSideLength/4,
                     lbSideLength,
                     lbSideLength
                 )
@@ -119,7 +122,7 @@ class WatchFace{
             buttons.add(
                 new LetterButton(
                     x+ i*(lbSideLength + lbSideLength/4) + lbSideLength/4,
-                    lbY + 2*lbSideLength + lbSideLength/2,//+i*lbSideLength+lbSideLength/4,
+                    lbY + 2*lbSideLength, //+ lbSideLength/2,//+i*lbSideLength+lbSideLength/4,
                     lbSideLength,
                     lbSideLength
                 )
@@ -146,7 +149,7 @@ class WatchFace{
             buttons.add(
                 new LetterButton(
                     x+ i*(lbSideLength + lbSideLength/4) + lbSideLength/4,
-                    lbY + lbSideLength + lbSideLength/4,//+i*lbSideLength+lbSideLength/4,
+                    lbY + lbSideLength, //+ lbSideLength/4,//+i*lbSideLength+lbSideLength/4,
                     lbSideLength,
                     lbSideLength
                 )
@@ -155,7 +158,7 @@ class WatchFace{
         buttons.add(
             new LetterButton(
                 x+ 1*(lbSideLength + lbSideLength/4) + lbSideLength/4,
-                lbY + 2*lbSideLength + lbSideLength/2,//+i*lbSideLength+lbSideLength/4,
+                lbY + 2*lbSideLength, //+ lbSideLength/2,//+i*lbSideLength+lbSideLength/4,
                 lbSideLength,
                 lbSideLength
             )
@@ -202,7 +205,8 @@ class WatchFace{
         fill(200);
         textAlign(LEFT);
         textFont(font);
-        text("Entered: " + currentTyped +"|", x, y, sideLength, sideLength/4); //draw what the user has entered thus far 
+        textLeading(40);
+        text(currentTyped +"|", x, y, sideLength, sideLength/4); //draw what the user has entered thus far 
         //
         //text("" + currentLetter, width/2, height/2-sizeOfInputArea/4); //draw current letter
         //textFont(font); //Reset font size
