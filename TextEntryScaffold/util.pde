@@ -71,11 +71,13 @@ class Panel{
 
     void draw(){
         if(state == PanelState.EXPANDED){
+          System.out.println("Panel State: EXPANDED -> COLLAPSED");
             fill(backgroundColor);
             rect(expandedPanelStartX, expandedPanelStartY, sizeOfInputArea, sizeOfInputArea * (3/4));
             drawPanelButtons();
         }
         else{ // COLLAPSED
+        System.out.println("Panel State: COLLAPSED -> EXPANDED");
             //draw the rectangle
             stroke(0);
             strokeWeight(5);
@@ -95,8 +97,14 @@ class Panel{
     }
 
     boolean mouseInRegion(){
+      System.out.println("test0");
         return (mouseX > x && mouseX < x + xLen 
             && mouseY > y && mouseY < y + yLen);
+    }
+    
+    boolean mouseInButtonRegion(float buttonX, float buttonY, float buttonW, float buttonH){
+      return (mouseX > x + buttonX && mouseX < x + buttonX + buttonW
+              && mouseY > y + buttonY && mouseY < y + buttonY + buttonH);
     }
 
     // Top left corner
@@ -107,6 +115,7 @@ class Panel{
 
     ArrayList<SymbolButton> buttonList = new ArrayList<SymbolButton>();
 }
+
 
 class SymbolButton{
 
