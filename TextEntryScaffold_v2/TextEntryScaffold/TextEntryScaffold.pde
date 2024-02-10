@@ -12,7 +12,7 @@ float lettersEnteredTotal = 0; //a running total of the number of letters the us
 float lettersExpectedTotal = 0; //a running total of the number of letters expected (correct phrases)
 float errorsTotal = 0; //a running total of the number of errors (when hitting next)
 String currentPhrase = ""; //the current target phrase
-String currentTyped = ""; //what the user has typed so far
+//String currentTyped = ""; //what the user has typed so far
 final int DPIofYourDeviceScreen = 393; //you will need to look up the DPI or PPI of your device to make sure you get the right scale. Or play around with this value.
 final float sizeOfInputArea = DPIofYourDeviceScreen*1; //aka, 1.0 inches square!
 PImage watch;
@@ -213,15 +213,15 @@ void nextTrial()
     System.out.println("Phrase " + (currTrialNum+1) + " of " + totalTrialNum); //output
     System.out.println("Target phrase: " + currentPhrase); //output
     System.out.println("Phrase length: " + currentPhrase.length()); //output
-    System.out.println("User typed: " + currentTyped); //output
-    System.out.println("User typed length: " + currentTyped.length()); //output
-    System.out.println("Number of errors: " + computeLevenshteinDistance(currentTyped.trim(), currentPhrase.trim())); //trim whitespace and compute errors
+    System.out.println("User typed: " + watchFace.currentTyped); //output
+    System.out.println("User typed length: " + watchFace.currentTyped.length()); //output
+    System.out.println("Number of errors: " + computeLevenshteinDistance(watchFace.currentTyped.trim(), currentPhrase.trim())); //trim whitespace and compute errors
     System.out.println("Time taken on this trial: " + (millis()-lastTime)); //output
     System.out.println("Time taken since beginning: " + (millis()-startTime)); //output
     System.out.println("==================");
     lettersExpectedTotal+=currentPhrase.trim().length();
-    lettersEnteredTotal+=currentTyped.trim().length();
-    errorsTotal+=computeLevenshteinDistance(currentTyped.trim(), currentPhrase.trim());
+    lettersEnteredTotal+=watchFace.currentTyped.trim().length();
+    errorsTotal+=computeLevenshteinDistance(watchFace.currentTyped.trim(), currentPhrase.trim());
   }
 
   //probably shouldn't need to modify any of this output / penalty code.
@@ -257,7 +257,7 @@ void nextTrial()
     currTrialNum++; //increment trial number
 
   lastTime = millis(); //record the time of when this trial ended
-  currentTyped = ""; //clear what is currently typed preparing for next trial
+  watchFace.clearText();//currentTyped = ""; //clear what is currently typed preparing for next trial
   currentPhrase = phrases[currTrialNum]; // load the next phrase!
   //currentPhrase = "abc"; // uncomment this to override the test phrase (useful for debugging)
 }

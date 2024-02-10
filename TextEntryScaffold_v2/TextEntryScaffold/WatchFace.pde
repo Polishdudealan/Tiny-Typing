@@ -27,6 +27,7 @@ class WatchFace{
         this.sideLength  = sideLength;
         this.mode  = FaceMode.NOTHING;
         this.font = font;
+        lettersEnteredTotal = 0;
         _initPanels();
         _initLetterButtons();
     }
@@ -165,6 +166,10 @@ class WatchFace{
 
         
 
+    }
+
+    void clearText(){
+        currentTyped = "";
     }
 
     void setMode(FaceMode newMode){
