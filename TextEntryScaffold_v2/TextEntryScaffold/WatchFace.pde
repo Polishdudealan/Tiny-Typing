@@ -16,7 +16,7 @@ class WatchFace{
     String currentTyped = "";
     
 
-    //char cursor = '▮';
+    char cursor = '|';//'▮';
 
     // ArrayList<LetterButton> topLBThreeConfig; // three config
     // ArrayList<LetterButton> topLBFourConfig; //four config
@@ -206,7 +206,7 @@ class WatchFace{
         textAlign(LEFT);
         textFont(font);
         textLeading(40);
-        text(currentTyped +"|", x, y, sideLength, sideLength/4); //draw what the user has entered thus far 
+        text(currentTyped +cursor, x, y, sideLength, sideLength/4); //draw what the user has entered thus far 
         //
         //text("" + currentLetter, width/2, height/2-sizeOfInputArea/4); //draw current letter
         //textFont(font); //Reset font size
