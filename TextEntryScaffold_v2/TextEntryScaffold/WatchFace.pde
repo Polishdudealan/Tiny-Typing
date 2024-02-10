@@ -35,13 +35,13 @@ class WatchFace{
         float panelY = y + sideLength/4;
         float panelHeight = 3*sideLength/4;
         left = new Panel(x, panelY, this.sideLength/3, panelHeight, 
-            color(255, 0, 0), "qwe\nasd\nzxc");
+            LIGHT_GRAY, "qwe\nasd\nzxc");
 
         center = new Panel(x+sideLength/3, panelY, this.sideLength/3, panelHeight,
-            color(0, 255, 0), "rtyu\nfgh\nvbn");
+            LIGHT_GRAY, "rtyu\nfgh\nvbn");
 
         right = new Panel(x+2*sideLength/3, panelY, this.sideLength/3, panelHeight,
-            color(0, 0, 255), "iop\njkl\nm");
+            LIGHT_GRAY, "iop\njkl\nm");
 
         panels = new Panel[]{left, center, right};
     }
@@ -208,7 +208,10 @@ class WatchFace{
     }
 
     void backspace(){
-        
+        if(currentTyped.length()>0){
+            currentTyped = currentTyped.substring(0, currentTyped.length() - 1);
+        }
+        //currentTyped = ? 
     }
 
 

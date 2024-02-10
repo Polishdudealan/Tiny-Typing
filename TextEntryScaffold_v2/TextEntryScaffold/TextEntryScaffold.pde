@@ -19,17 +19,36 @@ PImage watch;
 PImage finger;
 PFont font;
 
+color WHITE; //= color(255);
+color BLACK; //= color(0);
+color GRAY;// = color(100)
+color LIGHT_GRAY; //= color(192);
+color RED; //= color(255, 0, 0);
+color GREEN; //= color(0, 255, 0);
+color BLUE; //= color(0, 0, 255);
+
 WatchFace watchFace; 
+MouseWatcher mouseWatcher;
 
 //Variables for my silly implementation. You can delete this:
 char currentLetter = 'a';
-int displayDensity = 1;
+int displayDensity = 1; // REMOVE THIS!!!
 //You can modify anything in here. This is just a basic implementation.
 void setup()
 {
+
+  WHITE = color(255);
+   BLACK = color(0);
+   GRAY = color(100);
+   LIGHT_GRAY = color(192);
+   RED = color(255, 0, 0);
+   GREEN = color(0, 255, 0);
+   BLUE = color(0, 0, 255);
   //noCursor();
-  font = createFont("NotoSans-Regular.ttf", 14 * displayDensity);
+  font = createFont("NotoSans-Regular.ttf", 32 * displayDensity);
   watchFace  = new WatchFace(width/2-sizeOfInputArea/2, height/2-sizeOfInputArea/2, sizeOfInputArea, font);
+  mouseWatcher = new MouseWatcher(sizeOfInputArea);
+
   watch = loadImage("watchhand3smaller.png");
   //finger = loadImage("pngeggSmaller.png"); //not using this
   phrases = loadStrings("phrases2.txt"); //load the phrase set into memory
@@ -48,12 +67,12 @@ void setup()
 //You can modify anything in here. This is just a basic implementation.
 void draw()
 {
-  background(255); //clear background
+  background(WHITE); //clear background
 
   //check to see if the user finished. You can't change the score computation.
   if (finishTime!=0)
   {
-    fill(0);
+    fill(BLACK);
     textAlign(CENTER);
     text("Trials complete!", 400, 200); //output
     text("Total time taken: " + (finishTime - startTime)/1000 + "s", 400, 230); //output
@@ -93,7 +112,7 @@ void draw()
   }
   
   
-  if (false && startTime!=0 )
+  if (startTime!=0 )
   {
     //feel free to change the size and position of the target/entered phrases and next button 
     textAlign(LEFT); //align the text left
@@ -111,12 +130,13 @@ void draw()
     //The entered text should be put inside the 1"x1" square. You can specify a
     //smaller text size here. 1pt is 1/72 inch, so the following formula
     //converts point size to pixel size.
+    /*
     fill(200);
     textFont(font, (6 * DPIofYourDeviceScreen) / 72);
     text("Entered: " + currentTyped +"|", width/2-sizeOfInputArea/2, height/2-sizeOfInputArea/2, sizeOfInputArea, sizeOfInputArea/4); //draw what the user has entered thus far 
     textAlign(CENTER);
     text("" + currentLetter, width/2, height/2-sizeOfInputArea/4); //draw current letter
-    textFont(font); //Reset font size
+    textFont(font); //Reset font size*/
   }
 
 
@@ -131,7 +151,17 @@ boolean didMouseClick(float x, float y, float w, float h) //simple function to d
 
 
 void mouseReleased(){
- watchFace.onMouseReleased(); 
+  mouseWatcher.onMouseReleased();
+  if (mouseWatcher.isLeftSwipe()){
+    watchFace.backspace();
+  }
+  else if (mouseWatcher.isRightSwipe()){
+    watchFace.addSpace();
+  }
+  else{ //if it was not a swipe
+    watchFace.onMouseReleased(); 
+  }
+  
 }
 //my terrible implementation you can entirely replace
 //Note: void mousePressed() is a callback function defined by the Processing
@@ -163,7 +193,7 @@ void mousePressed()
   //   else if (currentLetter!='`') //if not any of the above cases, add the current letter to the typed string
   //     currentTyped+=currentLetter;
   // }
-
+  mouseWatcher.onMousePressed();
   //You are allowed to have a next button outside the 1" area
   if (didMouseClick(width-200, height-200, 200, 200)) //check if click is in next button
   {

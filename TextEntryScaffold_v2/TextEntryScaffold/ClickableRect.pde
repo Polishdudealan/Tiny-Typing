@@ -9,7 +9,7 @@ class ClickableRect{
         this.yCor = yCor;
         this.rectWidth = rectWidth;
         this.rectHeight = rectHeight;
-        this.rectColor = color(100); //default color
+        this.rectColor = GRAY; //default color
     }
 
     ClickableRect(float xCor, float yCor, float rectWidth, float rectHeight, color rectColor){
@@ -25,7 +25,7 @@ class ClickableRect{
         this.yCor = yCor;
         this.rectWidth = rectWidth;
         this.rectHeight = rectHeight;
-        this.rectColor = color(255,255,255); //if text is added, default to white fill
+        this.rectColor = WHITE; //if text is added, default to white fill
         this.drawText = text;
     }
 
@@ -51,7 +51,7 @@ class ClickableRect{
         //draws text in center of rectangle
         textAlign(CENTER);
         textSize(int(rectWidth*.2)); //scale to rectangle width
-        fill(0);
+        fill(BLACK);
         text(drawText, int(xCor+rectWidth*.5), int(yCor+rectHeight*.5)); //center in rect
     }
 

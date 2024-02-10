@@ -22,8 +22,6 @@ class MouseWatcher{
 		releaseY = mouseY;
 		xDiff = releaseX - pressX;
 		yDiff = releaseY - pressY;
-
-		print("Mouse released with xDiff " + xDiff + " is swipe??" + isSwipe());
 		
 	}
 
@@ -32,11 +30,11 @@ class MouseWatcher{
 	}
 
 	boolean isLeftSwipe(){
-    	return isSwipe() && xDiff < 0; 
+    	return isSwipe() && xDiff > 0; 
 	}
 
 	boolean isRightSwipe(){
-		return isSwipe() && xDiff > 0;
+		return isSwipe() && xDiff < 0;
 	}
 
 
