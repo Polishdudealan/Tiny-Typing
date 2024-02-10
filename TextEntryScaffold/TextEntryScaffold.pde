@@ -15,8 +15,8 @@ String currentPhrase = ""; //the current target phrase
 String currentTyped = ""; //what the user has typed so far
 final int DPIofYourDeviceScreen = 393; //you will need to look up the DPI or PPI of your device to make sure you get the right scale. Or play around with this value.
 final float sizeOfInputArea = DPIofYourDeviceScreen*1; //aka, 1.0 inches square!
-expandedPanelStartX = 0;
-expandedPanelStartY = sizeOfInputArea / 4;
+int expandedPanelStartX = 0;
+int expandedPanelStartY = (int)(sizeOfInputArea / 4);
 PImage watch;
 PImage finger;
 PFont font;

@@ -27,8 +27,7 @@ class WatchFace{
     void _initPanels(){
         float panelY = y + sideLength/4;
         float panelHeight = 3*sideLength/4;
-        left = new Panel(x, panelY, this.sideLength/3, panelHeight, 
-            color(255, 0, 0));
+        left = new Panel(x, panelY, this.sideLength/3, panelHeight, color(255, 0, 0));
 
         left.addButton(0 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'q', color(200, 100, 0));
         left.addButton(1 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'w', color(200, 100, 0));
@@ -38,7 +37,7 @@ class WatchFace{
             color(0, 255, 0));
 
         right = new Panel(x+2*sideLength/3, panelY, this.sideLength/3, panelHeight,
-            color(0, 0, 255))
+            color(0, 0, 255));
     }
 
     void setMode(FaceMode newMode){
@@ -93,7 +92,7 @@ class WatchFace{
     void onMousePressed(){
         if(mode == FaceMode.PANEL){
             for (Panel p: panels){
-                if(p.mouseInRegion){
+                if(p.mouseInRegion()){
                     mode = FaceMode.LETTER_BUTTONS;
                     selectedPanel = p;
                     p.state = PanelState.EXPANDED;
