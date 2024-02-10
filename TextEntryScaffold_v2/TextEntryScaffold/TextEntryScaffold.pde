@@ -152,7 +152,11 @@ boolean didMouseClick(float x, float y, float w, float h) //simple function to d
 
 void mouseReleased(){
   mouseWatcher.onMouseReleased();
-  if (mouseWatcher.isLeftSwipe()){
+  
+  if (mouseWatcher.isySwipe()){
+    watchFace.reset();
+  }
+  else if (mouseWatcher.isLeftSwipe()){
     watchFace.backspace();
   }
   else if (mouseWatcher.isRightSwipe()){
