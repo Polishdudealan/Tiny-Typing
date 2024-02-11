@@ -1,7 +1,7 @@
 
 //WatchFace(width/2-sizeOfInputArea/2, height/2-sizeOfInputArea/2, sizeOfInputArea)
 enum FaceMode{
-    PANEL,
+    PANELS,
     LETTER_BUTTONS,
     NOTHING
 }
@@ -21,9 +21,9 @@ class WatchFace{
     PFont font;
     FaceMode mode;
     String currentTyped = "";
-    Panel selectedPanel;
+    int selectedPanel;
 
-    WatchFace(float x, float y, float  sideLength, PFont font){
+    WatchFace(float x, float y, float sideLength, PFont font){
         this.x = x;
         this.y = y;
         this.sideLength  = sideLength;
@@ -35,20 +35,20 @@ class WatchFace{
     void _initPanels(){
         float panelY = y + sideLength/4;
         float panelHeight = 3*sideLength/4;
-        Panel left = new Panel(x, panelY, this.sideLength/3, panelHeight, color(255, 0, 0));
+        Panel left = new Panel(x, panelY, this.sideLength/3, panelHeight, color(255, 0, 0), 0, sideLength);
 
-        left.addButton(0 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'q', color(200, 100, 0));
-        left.addButton(1 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'w', color(200, 100, 0));
-        left.addButton(2 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'e', color(200, 100, 0));
+        left.addButton(0 * sideLength/4.0, 0, 100, 100, color(255, 255, 255), 'q', color(200, 0, 100));
+        //left.addButton(1 * sideLength/4.0, 0, sideLength/4.0 - 5, sideLength/4.0 - 5, color(255, 255, 255), 'w', color(200, 0, 100));
+        //left.addButton(2 * sideLength/4.0, 0, sideLength/4.0 - 5, sideLength/4.0 - 5, color(255, 255, 255), 'e', color(200, 0, 100));
         
-        Panel center = new Panel(x+sideLength/3, panelY, this.sideLength/3, panelHeight, color(0, 255, 0));
+        Panel center = new Panel(x+sideLength/3, panelY, this.sideLength/3, panelHeight, color(0, 255, 0), 1, sideLength);
         
         center.addButton(0 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'r', color(200, 100, 0));
         center.addButton(1 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 't', color(200, 100, 0));
         center.addButton(2 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'y', color(200, 100, 0));
         center.addButton(3 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'u', color(200, 100, 0));
 
-        Panel right = new Panel(x+2*sideLength/3, panelY, this.sideLength/3, panelHeight, color(0, 0, 255));
+        Panel right = new Panel(x+2*sideLength/3, panelY, this.sideLength/3, panelHeight, color(0, 0, 255), 2, sideLength);
         
         right.addButton(0 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'i', color(200, 100, 0));
         right.addButton(1 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'o', color(200, 100, 0));
@@ -65,7 +65,7 @@ class WatchFace{
     }
     
     void reset(){
-      mode = FaceMode.PANEL;
+      mode = FaceMode.PANELS;
     }
 
     void draw(){
@@ -73,20 +73,27 @@ class WatchFace{
         // Note: width and height are variables defined by the Processing library. For
         // more information, please refer to Processing's reference.
         rect(this.x, this.y, this.sideLength, this.sideLength); //input area should be 1" by 1"
-        System.out.println("watchface draw");
+        //System.out.println("watchface draw");
         if (mode != FaceMode.NOTHING){
             drawEnteredText();
         }
 
-        if(mode == FaceMode.PANEL){
-            drawPanels();
+        if(mode == FaceMode.PANELS){
+            System.out.println("PANELS mode");
+            panels.get(LEFT).state = PanelState.COLLAPSED;
+            panels.get(CENTER).state = PanelState.COLLAPSED;
+            panels.get(RIGHT).state = PanelState.COLLAPSED;
+            panels.get(LEFT).draw();
+            panels.get(CENTER).draw();
+            panels.get(RIGHT).draw();
         }
         else if(mode == FaceMode.LETTER_BUTTONS){
-            selectedPanel.drawPanelButtons();
+            panels.get(selectedPanel).state = PanelState.EXPANDED;
+            panels.get(selectedPanel).draw();
         }
 
-
-        
+        fill(200);
+        rect(this.x + this.sideLength/4, this.y, this.sideLength/4, this.sideLength/4);
     }
 
     void drawEnteredText(){
@@ -99,19 +106,8 @@ class WatchFace{
         //textFont(font); //Reset font size
     }
 
-
-    void drawPanels(){
-        panels.get(LEFT).draw();
-        panels.get(CENTER).draw();
-        panels.get(RIGHT).draw();
-    }
-
-    void drawLetterButtons(){
-        
-    }
-
     void onMousePressed(){
-        if(mode == FaceMode.PANEL){
+        if(mode == FaceMode.PANELS){
           System.out.println("WatchFace State: PANEL -> LETTER_BUTTONS");
             for (Panel p: panels){
               System.out.println("test0.1");
@@ -120,8 +116,8 @@ class WatchFace{
               }
                 if(p != null && p.mouseInRegion()){
                     mode = FaceMode.LETTER_BUTTONS;
-                    selectedPanel = p;
-                    p.state = PanelState.EXPANDED;
+                    selectedPanel = p.ID;
+                    //p.state = PanelState.EXPANDED;
                 }
             }
         }
@@ -130,9 +126,9 @@ class WatchFace{
           //TODO GET CHARACTER AND RETURN
           
           // Loop over buttons in current panel and check mouse coords
-          for(SymbolButton b: selectedPanel.buttonList){
-              if(b != null && selectedPanel.mouseInButtonRegion(b.x, b.y, b.xLen, b.yLen)){
-                mode = FaceMode.PANEL;
+          for(SymbolButton b: panels.get(selectedPanel).buttonList){
+              if(b != null && panels.get(selectedPanel).mouseInButtonRegion(b.x, b.y, b.xLen, b.yLen)){
+                mode = FaceMode.PANELS;
                 
                 // Draw letter here
                 currentTyped += b.symbol;
@@ -140,41 +136,7 @@ class WatchFace{
               }
           } // for
           // Need to collapse the panel no matter where the user clicks
-          selectedPanel.state = PanelState.COLLAPSED;
+          //panels.get(selectedPanel).state = PanelState.COLLAPSED;
       }
     }
 }
-/*
-class Panel{
-    ArrayList<String> letters;
-    float xCor, yCor, rectWidth, rectHeight;
-    color rectColor;
-    String drawText = "";
-
-    Panel(float xCor, float yCor, float rectWidth, float rectHeight, color rectColor, ArrayList<String> letters){
-        this.xCor = xCor;
-        this.yCor = yCor;
-        this.rectWidth = rectWidth;
-        this.rectHeight = rectHeight;
-        this.rectColor = rectColor;
-    }
-
-    void draw(){
-        //draw the rectangle
-        stroke(0);
-        strokeWeight(5);
-        fill(rectColor);
-        rect(xCor, yCor, rectWidth, rectHeight);
-
-        //text("q w e", )
-    }
-
-    boolean mouseInRegion(){
-        return (mouseX > xCor && mouseX < xCor+rectWidth 
-            && mouseY > yCor && mouseY < yCor+rectHeight);
-    }
-}
-
-class SymbolGrid{
-
-}*/

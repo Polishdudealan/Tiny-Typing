@@ -53,13 +53,15 @@ class Panel{
         backgroundColor = color(200);
     }
 
-    Panel(float xCoor, float yCoor, float xLength, float yLength, int backgndColor){
+    Panel(float xCoor, float yCoor, float xLength, float yLength, int backgndColor, int id, float sideLength){
         x = xCoor;
         y = yCoor;
         xLen = xLength;
         yLen = yLength;
         state = PanelState.COLLAPSED;
         backgroundColor = backgndColor;
+        ID = id;
+        sideLen = sideLength;
     }
 
 
@@ -69,15 +71,18 @@ class Panel{
         buttonList.add(newButton);
     }
 
+    // Happens for each panel
     void draw(){
+      System.out.println("Panel ID: " + ID);
         if(state == PanelState.EXPANDED){
-          System.out.println("Panel State: EXPANDED -> COLLAPSED");
+            System.out.println("Panel State: EXPANDED");
             fill(backgroundColor);
-            rect(expandedPanelStartX, expandedPanelStartY, sizeOfInputArea, sizeOfInputArea * (3/4));
-            drawPanelButtons();
+            //fill(255, 0, 0);
+            rect(expandedPanelStartX, expandedPanelStartY, sideLen, sideLen * (3.0/4.0));
+            //drawPanelButtons();
         }
-        else{ // COLLAPSED
-        System.out.println("Panel State: COLLAPSED -> EXPANDED");
+        else{ // COLLAPSED 
+            System.out.println("Panel State: COLLAPSED");
             //draw the rectangle
             stroke(0);
             strokeWeight(5);
@@ -88,10 +93,14 @@ class Panel{
 
     void drawPanelButtons(){
         for(SymbolButton button : buttonList){
-            fill(button.backgroundColor);
-            rect(x + button.x, y + button.y, button.xLen, button.yLen);
+          System.out.println("button x y");
+          System.out.println(button.x);
+          System.out.println(button.y);
+            //fill(button.backgroundColor);
+            fill(color(255, 255, 255));
+            rect(expandedPanelStartX + button.x, expandedPanelStartY + button.y, button.xLen, button.yLen);
             fill(button.symbolColor);
-            text(button.symbol, x + (button.x / 2.0), y + (button.y / 2.0));
+            text(button.symbol, expandedPanelStartX + (button.x / 2.0), expandedPanelStartY + (button.y / 2.0));
         }
 
     }
@@ -112,6 +121,8 @@ class Panel{
     float xLen, yLen;
     PanelState state;
     color backgroundColor;
+    int ID;
+    float sideLen;
 
     ArrayList<SymbolButton> buttonList = new ArrayList<SymbolButton>();
 }
