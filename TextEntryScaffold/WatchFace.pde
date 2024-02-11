@@ -35,24 +35,51 @@ class WatchFace{
     void _initPanels(){
         float panelY = y + sideLength/4;
         float panelHeight = 3*sideLength/4;
+        
+        float buttonWidth = sideLength/4.0;
+        float buttonHeight = sideLength/4.0;
+        
         Panel left = new Panel(x, panelY, this.sideLength/3, panelHeight, color(255, 0, 0), 0, sideLength);
 
-        left.addButton(0 * sideLength/4.0, 0, 100, 100, color(255, 255, 255), 'q', color(200, 0, 100));
-        //left.addButton(1 * sideLength/4.0, 0, sideLength/4.0 - 5, sideLength/4.0 - 5, color(255, 255, 255), 'w', color(200, 0, 100));
-        //left.addButton(2 * sideLength/4.0, 0, sideLength/4.0 - 5, sideLength/4.0 - 5, color(255, 255, 255), 'e', color(200, 0, 100));
+        left.addButton(0 * sideLength/4.0, 0, buttonWidth, sideLength/4.0, color(255, 255, 255), 'q', BLACK);
+        left.addButton(1 * sideLength/4.0, 0, buttonWidth, sideLength/4.0, color(255, 255, 255), 'w', BLACK);
+        left.addButton(2 * sideLength/4.0, 0, buttonWidth, sideLength/4.0, color(255, 255, 255), 'e', BLACK);
+        
+        left.addButton(0 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, sideLength/4.0, color(255, 255, 255), 'a', BLACK);
+        left.addButton(1 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, sideLength/4.0, color(255, 255, 255), 's', BLACK);
+        left.addButton(2 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, sideLength/4.0, color(255, 255, 255), 'd', BLACK);
+        
+        left.addButton(0 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, sideLength/4.0, color(255, 255, 255), 'z', BLACK);
+        left.addButton(1 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, sideLength/4.0, color(255, 255, 255), 'x', BLACK);
         
         Panel center = new Panel(x+sideLength/3, panelY, this.sideLength/3, panelHeight, color(0, 255, 0), 1, sideLength);
         
-        center.addButton(0 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'r', color(200, 100, 0));
-        center.addButton(1 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 't', color(200, 100, 0));
-        center.addButton(2 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'y', color(200, 100, 0));
-        center.addButton(3 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'u', color(200, 100, 0));
+        center.addButton(0 * sideLength/4.0, 0, buttonWidth, buttonHeight, color(200, 100, 0), 'r', BLACK);
+        center.addButton(1 * sideLength/4.0, 0, buttonWidth, buttonHeight, color(200, 100, 0), 't', BLACK);
+        center.addButton(2 * sideLength/4.0, 0, buttonWidth, buttonHeight, color(200, 100, 0), 'y', BLACK);
+        center.addButton(3 * sideLength/4.0, 0, buttonWidth, buttonHeight, color(200, 100, 0), 'u', BLACK);
+        
+        center.addButton(0 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'f', BLACK);
+        center.addButton(1 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'g', BLACK);
+        center.addButton(2 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'h', BLACK);
+        
+        center.addButton(0 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'c', BLACK);
+        center.addButton(1 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'v', BLACK);
+        center.addButton(2 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'b', BLACK);
 
         Panel right = new Panel(x+2*sideLength/3, panelY, this.sideLength/3, panelHeight, color(0, 0, 255), 2, sideLength);
         
-        right.addButton(0 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'i', color(200, 100, 0));
-        right.addButton(1 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'o', color(200, 100, 0));
-        right.addButton(2 * sideLength/4.0, 0, sideLength/4.0, sideLength/4.0, color(200, 100, 0), 'p', color(200, 100, 0));
+        right.addButton(1 * sideLength/4.0, 0, buttonWidth, buttonHeight, color(200, 100, 0), 'i', BLACK);
+        right.addButton(2 * sideLength/4.0, 0, buttonWidth, buttonHeight, color(200, 100, 0), 'o', BLACK);
+        right.addButton(3 * sideLength/4.0, 0, buttonWidth, buttonHeight, color(200, 100, 0), 'p', BLACK);
+        
+        right.addButton(1 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'j', BLACK);
+        right.addButton(2 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'k', BLACK);
+        right.addButton(3 * sideLength/4.0, 1 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'l', BLACK);
+        
+        right.addButton(1 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'n', BLACK);
+        right.addButton(2 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), 'm', BLACK);
+        right.addButton(3 * sideLength/4.0, 2 * sideLength/4.0, buttonWidth, buttonHeight, color(200, 100, 0), ' ', BLACK);
         
         // Add panels to array
         panels.add(left);
@@ -91,9 +118,6 @@ class WatchFace{
             panels.get(selectedPanel).state = PanelState.EXPANDED;
             panels.get(selectedPanel).draw();
         }
-
-        fill(200);
-        rect(this.x + this.sideLength/4, this.y, this.sideLength/4, this.sideLength/4);
     }
 
     void drawEnteredText(){
@@ -117,7 +141,6 @@ class WatchFace{
                 if(p != null && p.mouseInRegion()){
                     mode = FaceMode.LETTER_BUTTONS;
                     selectedPanel = p.ID;
-                    //p.state = PanelState.EXPANDED;
                 }
             }
         }
@@ -128,15 +151,13 @@ class WatchFace{
           // Loop over buttons in current panel and check mouse coords
           for(SymbolButton b: panels.get(selectedPanel).buttonList){
               if(b != null && panels.get(selectedPanel).mouseInButtonRegion(b.x, b.y, b.xLen, b.yLen)){
-                mode = FaceMode.PANELS;
                 
                 // Draw letter here
-                currentTyped += b.symbol;
-                
+                currentTyped += b.symbol;         
               }
           } // for
           // Need to collapse the panel no matter where the user clicks
-          //panels.get(selectedPanel).state = PanelState.COLLAPSED;
+          mode = FaceMode.PANELS;
       }
     }
 }

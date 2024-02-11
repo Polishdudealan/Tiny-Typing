@@ -17,8 +17,7 @@ String currentTyped = ""; //what the user has typed so far
 // laptop 130
 final int DPIofYourDeviceScreen = 393; //you will need to look up the DPI or PPI of your device to make sure you get the right scale. Or play around with this value.
 final float sizeOfInputArea = DPIofYourDeviceScreen*1; //aka, 1.0 inches square!
-float expandedPanelStartX = width/2-sizeOfInputArea/2 + sizeOfInputArea/4;
-float expandedPanelStartY = height/2-sizeOfInputArea/2;
+
 PImage watch;
 PImage finger;
 PFont font;
@@ -32,7 +31,7 @@ int displayDensity = 1;
 void setup()
 {
   //noCursor();
-  font = createFont("NotoSans-Regular.ttf", 14 * displayDensity);
+  font = createFont("NotoSans-Regular.ttf", 32 * displayDensity);
   watchFace  = new WatchFace(width/2-sizeOfInputArea/2, height/2-sizeOfInputArea/2, sizeOfInputArea, font);
   watch = loadImage("watchhand3smaller.png");
   //finger = loadImage("pngeggSmaller.png"); //not using this

@@ -14,6 +14,12 @@ import java.util.Map;
 //    add(new ArrayList<int>(50, 50))
 //};
 
+color BLACK = color(0,0,0);
+color RED = color(255, 0, 0);
+color GREEN = color(0, 255, 0);
+color BLUE = color(0, 0, 255);
+
+
 enum ButtonState{
     PRESSED,
     UNPRESSED
@@ -22,24 +28,6 @@ enum ButtonState{
 enum PanelState{
     EXPANDED,
     COLLAPSED
-}
-
-class Color{
-    Color(int red, int green, int blue){
-        r = red;
-        g = green;
-        b = blue;
-    }
-
-    Color(int gray){
-       r = gray;
-       g = gray;
-       b = gray; 
-    }
-
-    int r, g, b;
-
-    color c = color(r, g, b);
 }
 
 class Panel{
@@ -79,7 +67,7 @@ class Panel{
             fill(backgroundColor);
             //fill(255, 0, 0);
             rect(expandedPanelStartX, expandedPanelStartY, sideLen, sideLen * (3.0/4.0));
-            //drawPanelButtons();
+            drawPanelButtons();
         }
         else{ // COLLAPSED 
             System.out.println("Panel State: COLLAPSED");
@@ -88,32 +76,29 @@ class Panel{
             strokeWeight(5);
             fill(backgroundColor);
             rect(x, y, xLen, yLen);
+            
+            // Want to draw QWERTY representation on panels so users know where to click
         }
     }
 
     void drawPanelButtons(){
         for(SymbolButton button : buttonList){
-          System.out.println("button x y");
-          System.out.println(button.x);
-          System.out.println(button.y);
-            //fill(button.backgroundColor);
+            fill(button.backgroundColor);
             fill(color(255, 255, 255));
             rect(expandedPanelStartX + button.x, expandedPanelStartY + button.y, button.xLen, button.yLen);
             fill(button.symbolColor);
-            text(button.symbol, expandedPanelStartX + (button.x / 2.0), expandedPanelStartY + (button.y / 2.0));
+            text(button.symbol, expandedPanelStartX + button.x + (button.xLen / 2.0), expandedPanelStartY + button.y + (button.yLen / 2.0));
         }
-
     }
 
     boolean mouseInRegion(){
-      System.out.println("test0");
         return (mouseX > x && mouseX < x + xLen 
             && mouseY > y && mouseY < y + yLen);
     }
     
     boolean mouseInButtonRegion(float buttonX, float buttonY, float buttonW, float buttonH){
-      return (mouseX > x + buttonX && mouseX < x + buttonX + buttonW
-              && mouseY > y + buttonY && mouseY < y + buttonY + buttonH);
+      return (mouseX > expandedPanelStartX + buttonX && mouseX < expandedPanelStartX + buttonX + buttonW
+              && mouseY > expandedPanelStartY + buttonY && mouseY < expandedPanelStartY + buttonY + buttonH);
     }
 
     // Top left corner
@@ -123,6 +108,8 @@ class Panel{
     color backgroundColor;
     int ID;
     float sideLen;
+    float expandedPanelStartX = width/2.0-sizeOfInputArea/2.0;
+    float expandedPanelStartY = height/2.0-sizeOfInputArea/2.0 + sizeOfInputArea/4.0;
 
     ArrayList<SymbolButton> buttonList = new ArrayList<SymbolButton>();
 }
