@@ -105,11 +105,11 @@ void draw()
     text("Click to start time!", 280, 150); //display this messsage until the user clicks!
   }
 
-  if (startTime==0 && mousePressed)
-  {
-    nextTrial(); //start the trials!
-    watchFace.reset();
-  }
+  // if (startTime==0 && mouseReleased)
+  // {
+  //   nextTrial(); //start the trials!
+  //   watchFace.reset();
+  // }
   
   
   if (startTime!=0 )
@@ -150,11 +150,21 @@ boolean didMouseClick(float x, float y, float w, float h) //simple function to d
 }
 
 
-void mouseReleased(){
-  mouseWatcher.onMouseReleased();
+void mouseReleased(){  
   
+
+  //You are allowed to have a next button outside the 1" area
+  if (startTime == 0 || didMouseClick(width-200, height-200, 200, 200)) //check if click is in next button
+  {
+    nextTrial(); //if so, advance to next trial
+    return;
+  }
+
+  mouseWatcher.onMouseReleased();
+  if(!mouseWatcher.inRegion) mouseWatcher.reset();
+
   if (mouseWatcher.isySwipe()){
-    watchFace.reset();
+    watchFace.setPanelMode();
   }
   else if (mouseWatcher.isLeftSwipe()){
     watchFace.backspace();
@@ -165,6 +175,8 @@ void mouseReleased(){
   else{ //if it was not a swipe
     watchFace.onMouseReleased(); 
   }
+
+  
   
 }
 //my terrible implementation you can entirely replace
@@ -198,11 +210,8 @@ void mousePressed()
   //     currentTyped+=currentLetter;
   // }
   mouseWatcher.onMousePressed();
-  //You are allowed to have a next button outside the 1" area
-  if (didMouseClick(width-200, height-200, 200, 200)) //check if click is in next button
-  {
-    nextTrial(); //if so, advance to next trial
-  }
+  mouseWatcher.inRegion = watchFace.mouseInRegion();
+  
 }
 
 
@@ -256,6 +265,7 @@ void nextTrial()
   if (startTime==0) //first trial starting now
   {
     System.out.println("Trials beginning! Starting timer..."); //output we're done
+    watchFace.reset();
     startTime = millis(); //start the timer!
   } else
     currTrialNum++; //increment trial number

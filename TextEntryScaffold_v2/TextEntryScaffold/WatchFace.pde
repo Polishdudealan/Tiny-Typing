@@ -3,7 +3,8 @@
 enum FaceMode{
     PANEL,
     LETTER_BUTTONS,
-    NOTHING
+    NOTHING,
+    INSTRUCTIONS
 }
 class WatchFace{
 
@@ -16,7 +17,7 @@ class WatchFace{
     String currentTyped = "";
     
 
-    char cursor = '|';//'▮';
+    char cursor = '_';//'▮';
 
     // ArrayList<LetterButton> topLBThreeConfig; // three config
     // ArrayList<LetterButton> topLBFourConfig; //four config
@@ -39,13 +40,13 @@ class WatchFace{
         float panelY = y + sideLength/4;
         float panelHeight = 3*sideLength/4;
         left = new Panel(x, panelY, this.sideLength/3, panelHeight, 
-            LIGHT_GRAY, "qwe\nasd\nzxc");
+            LIGHT_GRAY, "q w e\na s d\nz x c");
 
         center = new Panel(x+sideLength/3, panelY, this.sideLength/3, panelHeight,
-            LIGHT_GRAY, "rtyu\nfgh\nvbn");
+            LIGHT_GRAY, "r t y u\nf g h\nv b");
 
         right = new Panel(x+2*sideLength/3, panelY, this.sideLength/3, panelHeight,
-            LIGHT_GRAY, "iop\njkl\nm");
+            LIGHT_GRAY, "i o p\nj k l\nn m");
 
         panels = new Panel[]{left, center, right};
     }
@@ -118,7 +119,7 @@ class WatchFace{
             );
         }
 
-        for(int i = 0; i < 3; i++){
+        for(int i = 0; i < 2; i++){
             buttons.add(
                 new LetterButton(
                     x+ i*(lbSideLength + lbSideLength/4) + lbSideLength/4,
@@ -155,6 +156,19 @@ class WatchFace{
                 )
             );
         }
+
+        for(int i = 0; i < 2; i++){
+            buttons.add(
+                new LetterButton(
+                    x+ i*(lbSideLength + lbSideLength/4) + lbSideLength/4,
+                    lbY + 2*lbSideLength, //+ lbSideLength/2,//+i*lbSideLength+lbSideLength/4,
+                    lbSideLength,
+                    lbSideLength
+                )
+            );
+        }
+
+        /*
         buttons.add(
             new LetterButton(
                 x+ 1*(lbSideLength + lbSideLength/4) + lbSideLength/4,
@@ -162,7 +176,7 @@ class WatchFace{
                 lbSideLength,
                 lbSideLength
             )
-        );
+        );*/
         right.setButtons(buttons);
 
 
@@ -179,8 +193,13 @@ class WatchFace{
         mode = newMode;
     }
     
+
+    void setPanelMode(){
+        mode = FaceMode.PANEL;
+    }
+
     void reset(){
-      mode = FaceMode.PANEL;
+      mode = FaceMode.INSTRUCTIONS;//FaceMode.PANEL;
     }
 
     void draw(){
@@ -188,7 +207,12 @@ class WatchFace{
         // Note: width and height are variables defined by the Processing library. For
         // more information, please refer to Processing's reference.
         rect(this.x, this.y, this.sideLength, this.sideLength); //input area should be 1" by 1"
-        if (mode != FaceMode.NOTHING){
+
+        if (mode == FaceMode.INSTRUCTIONS){
+            drawInstructions();
+            
+        }
+        else if (mode != FaceMode.NOTHING){
             drawEnteredText();
         }
 
@@ -199,6 +223,17 @@ class WatchFace{
             drawLetterButtons();
         }
         
+    }
+
+    void drawInstructions(){
+        //draws text in center of rectangle
+        textAlign(CENTER);
+        //textFont(createFont("NotoSans-Regular.ttf", 100 * displayDensity));
+        textSize(20); //scale to rectangle width
+        fill(LIGHT_GRAY);
+        String instr = "INSTRUCTIONS:\n\nClick panel to go to letter buttons\n\nWhile in letter buttons, select a letter to \ntype or swipe up to return to panels\n\nSwipe left for backspace\n\nSwipe right for space";
+        text(instr, int(x+sideLength*.5), int(y+sideLength*.1)); //center in rect
+
     }
 
     void drawEnteredText(){
@@ -227,7 +262,12 @@ class WatchFace{
     
 
     void onMouseReleased(){
-        if(mode == FaceMode.PANEL){
+        if (!mouseInRegion()) return;
+
+        if(mode == FaceMode.INSTRUCTIONS){
+            mode = FaceMode.PANEL;
+        }
+        else if(mode == FaceMode.PANEL){
             for (Panel p: panels){
                 if(p.mouseInRegion()){
                     mode = FaceMode.LETTER_BUTTONS;
@@ -261,6 +301,12 @@ class WatchFace{
 
         selectedPanel.drawButtons();
 
+    }
+
+
+    boolean mouseInRegion(){
+        return (mouseX > x && mouseX < x+sideLength 
+            && mouseY > y && mouseY < y+sideLength);
     }
 
 }

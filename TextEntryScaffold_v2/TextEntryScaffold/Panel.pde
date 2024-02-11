@@ -9,7 +9,7 @@ class Panel extends ClickableRect {
 
     void setLetters(String letters){
         drawText = letters;
-        this.letters = letters.replace("\n", "");
+        this.letters = letters.replace("\n", "").replace(" ", "");
     }
 
 
@@ -19,6 +19,16 @@ class Panel extends ClickableRect {
         for(int i = 0; i < letters.length(); i++){//letters length should always be same as buttons length
             buttons.get(i).setSymbol(letters.charAt(i));
         }
+    }
+
+    void drawCenterText(){
+        //draws text in center of rectangle
+        textAlign(CENTER);
+        //textFont(createFont("NotoSans-Regular.ttf", 100 * displayDensity));
+        //textSize(int(rectWidth*.2)); //scale to rectangle width
+        textLeading(80);
+        fill(BLACK);
+        text(drawText, int(xCor+rectWidth*.5), int(yCor+rectHeight*.25)); //center in rect
     }
 
     void drawButtons(){

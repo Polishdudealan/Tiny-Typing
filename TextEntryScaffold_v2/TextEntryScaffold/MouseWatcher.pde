@@ -5,12 +5,20 @@ class MouseWatcher{
 
 	float xDiff, yDiff;
 
+	boolean inRegion;
+
 	MouseWatcher(float sideLength){
 		
 		//sideLenth is number of pixels per inch
 		this.sideLength = sideLength;
+		inRegion = false;
 	}
 
+	void reset(){
+		onMousePressed();
+		onMouseReleased();
+		inRegion = false;
+	}
 
 	void onMousePressed(){
 		pressX = mouseX;
